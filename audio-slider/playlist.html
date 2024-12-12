@@ -1,0 +1,113 @@
+<html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>slider</title>
+    <style>
+        body {
+            font-size: 16px;
+            padding: 30px;
+            background-color: greenyellow
+        }
+
+        .wrapper {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            gap: 10px;
+        }
+
+        #avatar {
+            height: 256px;
+            width: 256px;
+            border-radius: 15px;
+        }
+
+        button {
+            font-size: 16px;
+            padding: 5px 10px;
+            border-radius: 15px;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="wrapper">
+        <img id="avatar" />
+        <h2 id="name"></h2>
+        <audio id="audio" controls></audio>
+        <div>
+            <button onclick="next()">next</button>
+            <button onclick="prev()">prev</button>
+        </div>
+    </div>
+
+    <script>
+        const reviews = [
+            {
+                id: 1,
+                name: "Someone Like You",
+                img: "https://randomuser.me/api/portraits/women/4.jpg",
+                src: "./files/Someone_Like_You.mp3",
+            },
+            {
+                id: 2,
+                name: "Adele Turning Tables",
+                img: "https://randomuser.me/api/portraits/women/1.jpg",
+                src: "./files/Adele_Turning_Tables.mp3",
+            },
+            {
+                id: 3,
+                name: "Adele When We Were Young",
+                img: "https://randomuser.me/api/portraits/women/2.jpg",
+                src: "./files/Adele_When_We_Were_Young.mp3",
+            },
+            {
+                id: 4,
+                name: "Dont You Remember",
+                img: "https://randomuser.me/api/portraits/women/3.jpg",
+                src: "./files/Dont_You_Remember.mp3",
+            },
+        ];
+        var index = 0
+        var audioElement = document.getElementById('audio')
+        function next() {
+            var isPlaying = false
+            if (!audioElement.paused) {
+                isPlaying = true
+            }
+            index++
+            if (index >= reviews.length) {
+                index = 0
+            }
+            render(reviews[index])
+            if (isPlaying) {
+                document.getElementById('audio').play();
+            }
+        }
+        function prev() {
+            var isPlaying = false
+            if (!audioElement.paused) {
+                isPlaying = true
+            }
+            index--
+            if (index < 0) {
+                index = reviews.length - 1
+            }
+            render(reviews[index])
+            if (isPlaying) {
+                document.getElementById('audio').play();
+            }
+        }
+        function render(review) {
+            document.getElementById('avatar').setAttribute('src', review.img)
+            audioElement.setAttribute('src', review.src)
+            document.getElementById('name').innerHTML = review.name
+        }
+        render(reviews[index])
+    </script>
+</body>
+
+</html>
